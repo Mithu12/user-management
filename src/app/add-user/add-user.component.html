@@ -1,1 +1,87 @@
-<p>add-user works!</p>
+<div class="login-container">
+  <mat-card class="login-box">
+    <div class="center">
+      <mat-card-title class="mt-1 mb-1">Add New User</mat-card-title>
+      <form [formGroup]="registerForm">
+
+        <!--        User Name-->
+        <mat-form-field appearance="outline" class="width-9">
+          <mat-label>Enter Name</mat-label>
+          <input matInput placeholder="User Name" formControlName="name">
+          <mat-error *ngIf="getValidationStatus('name')">User Name Required
+          </mat-error>
+        </mat-form-field>
+
+        <!--        email-->
+        <mat-form-field appearance="outline" class="width-9">
+          <mat-label>Enter Email</mat-label>
+          <input matInput placeholder="example@example.com" formControlName="email">
+          <mat-error *ngIf="getValidationStatus('email')">Enter a valid Email
+          </mat-error>
+        </mat-form-field>
+
+        <!--        phone-->
+        <mat-form-field appearance="outline" class="width-9">
+          <mat-label>Enter Phone Number</mat-label>
+          <input matInput placeholder="018..." formControlName="phone">
+          <mat-error *ngIf="getValidationStatus('phone')">Phone Number Required
+          </mat-error>
+        </mat-form-field>
+
+        <!--        NID-->
+        <mat-form-field appearance="outline" class="width-9">
+          <mat-label>Enter NID Number</mat-label>
+          <input matInput placeholder="1548746655656" formControlName="nid">
+          <mat-error *ngIf="getValidationStatus('nid')">Please Enter Number Only
+          </mat-error>
+        </mat-form-field>
+
+        <div formGroupName="address">
+
+          <!--        area -->
+          <mat-form-field appearance="outline" class="width-9">
+            <mat-label>Enter Area</mat-label>
+            <input matInput placeholder="1548746655656" formControlName="area">
+            <mat-error *ngIf="getValidationStatus('area')">Area Required
+            </mat-error>
+          </mat-form-field>
+
+          <!--district-->
+          <mat-form-field appearance="fill" class="width-9">
+            <mat-label>Select</mat-label>
+            <mat-select formControlName="district">
+              <mat-option *ngFor="let district of districts" value="{{ district.name}}">{{ district.name}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="getValidationStatus('district')">District Required
+            </mat-error>
+          </mat-form-field>
+
+
+          <!--        Postal Code  -->
+          <mat-form-field appearance="outline" class="width-9">
+            <mat-label>Enter Postal Code</mat-label>
+            <input matInput placeholder="1000" formControlName="postalCode">
+            <mat-error *ngIf="getErrorByType('address.postalCode','required')">Postal Code Required
+            </mat-error>
+            <mat-error *ngIf="getErrorByType('address.postalCode','pattern')">Please Enter Number Only
+            </mat-error>
+          </mat-form-field>
+
+        </div>
+
+
+        <div>
+          <button (click)="addUser()" [disabled]="!registerForm.valid" [class.disabled]="!registerForm.valid"
+                  class="login-button" mat-stroked-button>Add User
+          </button>
+          <!--          <button (click)="addUser()"-->
+          <!--                  class="login-button" mat-stroked-button>Add User(no val)-->
+          <!--          </button>-->
+        </div>
+
+
+      </form>
+    </div>
+  </mat-card>
+
+</div>

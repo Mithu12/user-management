@@ -12,10 +12,13 @@ export class LoginComponent implements OnInit {
   @Output() public newLogin = new EventEmitter()
 
   constructor(private fb: FormBuilder, private router: Router) {
+
+    // redirect if user already logged in
     if (document.cookie.includes('loggedIn'))
-      router.navigate(['/users'])
+      router.navigate(['/user/list'])
   }
 
+  // login form group
   loginForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', Validators.required]
@@ -25,12 +28,21 @@ export class LoginComponent implements OnInit {
   }
 
   login = async () => {
+
+    // set cookie and emit newLogin event for app.component to listen
     document.cookie = `loggedIn=${this.getFormFieldData('email')?.value};`;
-    this.newLogin.emit('login')
-    await this.router.navigate(['/users'])
+    this.newLogin.emit()
+    await this.router.navigate(['/user/list'])
   }
+
+  // return form group data by name
   getFormFieldData = (name: string) => {
     return this.loginForm.get(name)
+  }
+
+  // return validation status of form group by name
+  getValidationStatus = (name: string) => {
+    return !(this.getFormFieldData(name)?.valid && this.getFormFieldData(name)?.untouched)
   }
 
 }

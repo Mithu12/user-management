@@ -1,24 +1,27 @@
 <div class="login-container">
   <mat-card class="login-box">
     <div class="center">
-      <mat-card-title>Login</mat-card-title>
+      <mat-card-title class="mt-1 mb-1">Login</mat-card-title>
       <form [formGroup]="loginForm">
         <mat-form-field appearance="outline" class="width-9">
           <mat-label>Enter Email</mat-label>
           <input matInput placeholder="example@example.com" formControlName="email">
-          <mat-error *ngIf="!getFormFieldData('email')?.valid && !getFormFieldData('email')?.untouched">Enter a valid email
+          <mat-error *ngIf="getValidationStatus('email')">Enter a valid
+            email
           </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="width-9">
           <mat-label>Enter Password</mat-label>
           <input type="password" matInput placeholder="" formControlName="password">
-          <mat-error *ngIf="!getFormFieldData('password')?.valid && !getFormFieldData('password')?.untouched">Password
+          <mat-error *ngIf="getValidationStatus('password')">Password
             Required
           </mat-error>
         </mat-form-field>
         <div>
-          <button (click)="login()" [disabled]="!loginForm.valid" [class.disabled]="!loginForm.valid" class="login-button" mat-stroked-button>login</button>
+          <button (click)="login()" [disabled]="!loginForm.valid" [class.disabled]="!loginForm.valid"
+                  class="login-button" mat-stroked-button>login
+          </button>
         </div>
       </form>
     </div>

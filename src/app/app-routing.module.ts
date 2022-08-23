@@ -3,11 +3,13 @@ import {RouterModule, Routes} from '@angular/router';
 import {LoginComponent} from "./login/login.component";
 import {AddUserComponent} from "./add-user/add-user.component";
 import {NotFoundComponent} from "./not-found/not-found.component";
+import {AllUsersComponent} from "./all-users/all-users.component";
 
 const routes: Routes = [
   {path: "", redirectTo: '/login', pathMatch: 'full'},
   {path: 'login', component: LoginComponent},
   {path: 'user/add', component: AddUserComponent},
+  {path: 'user/list', component: AllUsersComponent},
   {path: '**', component: NotFoundComponent},
 ];
 
@@ -19,5 +21,5 @@ export class AppRoutingModule {
 }
 
 export const routingComponents = [
-  LoginComponent, AddUserComponent, NotFoundComponent
+  LoginComponent, AddUserComponent, NotFoundComponent, AllUsersComponent
 ]

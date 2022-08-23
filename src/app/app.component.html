@@ -5,10 +5,13 @@
 </a></span>
     <span class="spacer"></span>
     <div *ngIf="isLogged">
+      <a mat-button routerLink="/user/list">User List</a>
+      <a mat-button routerLink="/user/add">Add User</a>
       <a mat-button (click)="logout()">logout</a>
-      <a mat-button routerLink="/register">User List</a>
     </div>
     <a *ngIf="!isLogged" mat-button routerLink="/login">Login</a>
   </mat-toolbar-row>
 </mat-toolbar>
-<router-outlet></router-outlet>
+
+<!--activate,deactivate event for listening to login page for new login and change nav-bar -->
+<router-outlet (activate)="newLogIn($event)" (deactivate)="unsubscribe()"></router-outlet>
