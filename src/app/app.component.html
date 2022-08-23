@@ -1,2 +1,14 @@
-
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <!--  <span>HOME</span> -->
+    <span><a routerLink="/"><mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="home"></mat-icon>
+</a></span>
+    <span class="spacer"></span>
+    <div *ngIf="isLogged">
+      <a mat-button (click)="logout()">logout</a>
+      <a mat-button routerLink="/register">User List</a>
+    </div>
+    <a *ngIf="!isLogged" mat-button routerLink="/login">Login</a>
+  </mat-toolbar-row>
+</mat-toolbar>
 <router-outlet></router-outlet>

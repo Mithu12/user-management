@@ -1,0 +1,23 @@
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+  width: 100%;
+}
+
+.disabled {
+  background: #ddd !important;
+}
+.center {
+  text-align: center;
+  width: 100%;
+}
+.login-box{
+  width: 40%;
+}
+.login-button{
+  background: #47A7FF;
+  color: #fff;
+  border-radius: 5px;
+}
