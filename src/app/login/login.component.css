@@ -9,10 +9,6 @@
 .disabled {
   background: #ddd !important;
 }
-.center {
-  text-align: center;
-  width: 100%;
-}
 .login-box{
   width: 40%;
 }

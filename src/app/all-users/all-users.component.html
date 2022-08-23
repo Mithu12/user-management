@@ -1,1 +1,29 @@
-<p>all-users works!</p>
+<div class="user-list-container">
+
+  <mat-card style="width: 80%">
+    <div class="center">
+      <mat-card-title class="mt-1 mb-1">All User</mat-card-title>
+
+      <div class="user-list-box">
+        <div class="user-info-row">
+          <span> name </span>
+          <span> email </span>
+          <span> phone </span>
+          <span> Actions </span>
+        </div>
+
+        <div *ngFor="let user of userList" class="user-info-row">
+          <span>{{ user.name}}</span>
+          <span> {{ user.email}} </span>
+          <span> {{ user.phone}} </span>
+          <span class="actions">
+
+            <button style="margin-right: 5px" mat-raised-button color="primary">Update</button>
+            <button mat-raised-button color="warn">Delete</button>
+          </span>
+        </div>
+      </div>
+
+    </div>
+  </mat-card>
+</div>

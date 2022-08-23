@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {User} from "../utils/Interfaces";
+import {user} from "../utils/testData";
 
 @Component({
   selector: 'app-all-users',
@@ -7,7 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AllUsersComponent implements OnInit {
 
-  constructor() { }
+  userList: User[] = user
+
+  constructor() {
+  }
 
   ngOnInit(): void {
   }

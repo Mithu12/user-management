@@ -1,0 +1,29 @@
+.user-list-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 20px;
+}
+.user-list-box {
+  display: flex;
+  justify-content: center;
+  /*gap: 20px;*/
+  flex-direction: column;
+}
+.user-info-row {
+  display: flex;
+  margin: 10px 0;
+  padding: 10px 0;
+  /*justify-content: space-between;*/
+  line-height: 30px;
+  background: #F4FAFF;
+}
+.user-info-row span {
+  width: 25%;
+  overflow-wrap: break-word;
+}
+.actions{
+  width: 20% !important;
+  /*padding: 18px 0 !important;*/
+}

@@ -1,10 +1,11 @@
 import {Validators} from "@angular/forms";
 
 export interface User {
+  image: string,
   name: string,
   email: string,
   phone: string,
-  nid: number,
+  nid?: number,
   address: {
     area: string,
     district: string,
