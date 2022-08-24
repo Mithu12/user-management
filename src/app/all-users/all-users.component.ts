@@ -30,7 +30,7 @@ export class AllUsersComponent implements OnInit {
   ngOnInit(): void {
 
     this.route.queryParams.subscribe((p) => {
-      this.currentPage = Number(p['currentPage'])
+      this.currentPage = Number(p['currentPage']) || 1
     })
     this.getAllUsers(this.currentPage)
   }

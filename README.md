@@ -1,27 +1,42 @@
-# Task
+# User Management
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.3.
+A web app for managing user information. It is built using Angular and Express framework.
 
-## Development server
+## Requirements
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+This program is compatible with Node 16. It requires the following modules
+ 
+* [@angular/cli](https://angular.io/cli)
+* [express](https://expressjs.com/en/starter/installing.html)
+ 
 
-## Code scaffolding
+## Installation
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Use the node package manager (npm) to install all the required modules. As back-end and front-end is built separately it is required
+to run the below command in both `root` directory and `./backend` directory.
+```bash
+npm install
+```
+Run this command in `root` directory and the below commands later.
+```bash
+cd backend
+npm install
+```
 
-## Build
+## Running the program
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+From the `root` directory run the below command to start the front-end.
 
-## Running unit tests
+```bash
+npm start
+or 
+ng serve
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+And from `backend` directory separately run the below command to start the back-end.
 
-## Running end-to-end tests
+```bash
+npm start
+```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+The app will be available at `http://localhost:4200/`.
