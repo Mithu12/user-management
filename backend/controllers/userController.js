@@ -6,30 +6,30 @@ import path from "path";
 
 // @desc    fetch all Users
 // @route   GET /api/users
-// @access  Public
 
 export const getUsers = asyncHandler(async (req, res) => {
-  const {lastId, limit = 20} = req.query
+  let currentPage = req.query.currentPage || 1
+  const {limit = 20} = req.query
 
-  const whereClause = lastId ? `WHERE users.id<${Number(lastId)}` : ''
+  // const whereClause = lastId ? `WHERE users.id<${Number(lastId)}` : ''
 
   const countQuery = `SELECT count(*) FROM users`
-  const query = `SELECT * FROM users ${whereClause} ORDER BY users.id DESC LIMIT ${Number(limit)}`
-
-  const users = await pool.query(query)
   const count = await pool.query(countQuery)
+
+  const query = `SELECT * FROM users ORDER BY users.id DESC LIMIT ${Number(limit)} OFFSET ${(currentPage-1)*limit}`
+  const users = await pool.query(query)
+
   res.json({
     message: '',
     success: true,
     data: users.rows,
-    totalPages: Math.ceil(count / limit)
+    totalPages: Math.ceil(count.rows[0].count / limit)
   })
 })
 
 
-// @desc    fetch single product
-// @route   GET /api/products/:id
-// @access  Public
+// @desc    fetch single User details
+// @route   GET /api/users/:id
 
 
 export const getSingleUser = asyncHandler(async (req, res) => {
@@ -50,16 +50,14 @@ export const getSingleUser = asyncHandler(async (req, res) => {
 })
 
 
-// @desc    Creat product
-// @route   POST /api/products/create
-// @access  Private/Admin
+// @desc    Creat User
+// @route   POST /api/users
 
 
 export const createUser = asyncHandler(async (req, res) => {
 
   const image = '/' + req.file.filename
 
-  console.log(req.body)
 
   const {
     name,
@@ -82,7 +80,6 @@ export const createUser = asyncHandler(async (req, res) => {
     district,
     postalCode
     ) VALUES(${userInfo})`
-  console.log(query)
   await pool.query(query)
   res.json({
     message: '',
@@ -91,13 +88,11 @@ export const createUser = asyncHandler(async (req, res) => {
 })
 
 
-// @desc    Update product
-// @route   POST /api/products/update/:id
-// @access  Private/Admin
+// @desc    Update User
+// @route   PATCH /api/users/:id
 
 
 export const updateUser = asyncHandler(async (req, res) => {
-  // console.log('asd')
   const image = req.file ? '/' + req.file.filename : ''
   const {
     id,
@@ -136,7 +131,6 @@ export const updateUser = asyncHandler(async (req, res) => {
     }
   }
 
-  // console.log(query)
   res.json({
     message: 'Updated Successfully',
     success: true,
@@ -144,9 +138,8 @@ export const updateUser = asyncHandler(async (req, res) => {
 })
 
 
-// @desc    Delete product
-// @route   GET /api/products/delete/:id
-// @access  Private/Admin
+// @desc    Delete User
+// @route   GET /api/users/:id
 
 export const deleteUser = asyncHandler(async (req, res) => {
   const {id} = req.params

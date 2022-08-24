@@ -1,10 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {User} from "../utils/Interfaces";
-import {ActivatedRoute, ParamMap, Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {UserManageService} from "../services/user-manage.service";
 import {environment} from "../../environments/environment";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {PageEvent} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-all-users',
@@ -16,17 +15,13 @@ export class AllUsersComponent implements OnInit {
   userList: User[] = []
   error = ''
   serverUrl = environment.serverUrl
-  totalPage = 1
-  lastId = 0
-
-  length = 100;
-  pageSize = 10;
 
   loading = true
 
-  // MatPaginator Output
-  // @ts-ignore
-  pageEvent: PageEvent;
+  // pagination data
+  totalPage = 1
+  currentPage = 1
+  pageList: number[] = []
 
 
   constructor(private userService: UserManageService, private router: Router, public snackBar: MatSnackBar, private route: ActivatedRoute) {
@@ -34,10 +29,26 @@ export class AllUsersComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.route.queryParams.subscribe((p) => this.lastId = Number(p['lastId']))
-    // console.log(this.lastId)
-    this.getAllUsers(this.lastId)
+    this.route.queryParams.subscribe((p) => {
+      this.currentPage = Number(p['currentPage'])
+    })
+    this.getAllUsers(this.currentPage)
   }
+
+  // Pagination functionality
+  pageChange = (page: number) => {
+    if (page < 1 || page > this.totalPage)
+      return
+    this.currentPage = page
+    this.router.navigate(
+      [],
+      {
+        relativeTo: this.route,
+        queryParams: {currentPage: page}
+      });
+    this.getAllUsers(this.currentPage)
+  }
+
 
   // show snackBar message on error or success
   snackBarMessage = (message: string) => {
@@ -47,12 +58,16 @@ export class AllUsersComponent implements OnInit {
   }
 
 // fetch all the user list from server
-  getAllUsers = (lastId: number) => {
+  getAllUsers = (currentPage: number) => {
     this.loading = true
-    this.userService.getWorkers(lastId).subscribe({
+    this.userService.getWorkers(currentPage).subscribe({
       next: (data) => {
         this.userList = data.data
         this.totalPage = data.totalPages
+        let a = []
+        for (let i = 1; i <= data.totalPages; i++)
+          a.push(i)
+        this.pageList = a
         this.loading = false
       },
       error: (error) => {
@@ -67,7 +82,7 @@ export class AllUsersComponent implements OnInit {
     this.loading = true
     this.userService.deleteWorker(id).subscribe({
       next: (data) => {
-        this.getAllUsers(this.lastId)
+        this.getAllUsers(this.currentPage)
         this.snackBarMessage(data.message)
         this.loading = false
       },

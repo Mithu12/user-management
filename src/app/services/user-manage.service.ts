@@ -17,9 +17,9 @@ export class UserManageService {
   public errorHandler = (err: HttpErrorResponse) => throwError(() => new Error(err.message))
 
 
-  public getWorkers = (lastId: number): Observable<{ data: User[], totalPages: number }> => {
-    console.log({lastId})
-    return this.http.get<{ data: User[], totalPages: number }>(this.baseUrl + `/users${lastId ? `?lastId=${lastId}` : ''}`).pipe(catchError(this.errorHandler))
+  public getWorkers = (currentPage: number): Observable<{ data: User[], totalPages: number }> => {
+    console.log({currentPage})
+    return this.http.get<{ data: User[], totalPages: number }>(this.baseUrl + `/users${currentPage ? `?currentPage=${currentPage}` : ''}`).pipe(catchError(this.errorHandler))
   }
 
 

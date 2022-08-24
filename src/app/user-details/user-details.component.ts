@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {UserManageService} from "../services/user-manage.service";
-import {User, UserDetails} from "../utils/Interfaces";
+import {UserDetails} from "../utils/Interfaces";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {ActivatedRoute, ParamMap} from "@angular/router";
 import {environment} from "../../environments/environment";

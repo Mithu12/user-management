@@ -2,11 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, ParamMap, Router} from "@angular/router";
 import {FormBuilder, Validators} from "@angular/forms";
 import {districtList} from "../utils/districtList";
-import {user} from "../utils/testData";
-import {User} from "../utils/Interfaces";
 import {UserManageService} from "../services/user-manage.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {reduce} from "rxjs";
 import {environment} from "../../environments/environment";
 
 @Component({
@@ -67,7 +64,7 @@ export class UserUpdateComponent implements OnInit {
           district,
           image,
         } = data.data
-        this.imageUrl = this.server+image
+        this.imageUrl = this.server + image
         this.updateForm.patchValue({
           address: {area, district, postalCode: postalcode},
           email: email,
@@ -98,13 +95,12 @@ export class UserUpdateComponent implements OnInit {
     // call to service for user information update
     this.userService.updateWorkersDetails(this.formData).subscribe({
       next: (data) => {
+        this.snackBarMessage(data.message)
         this.fetchWorkerDetails()
       },
       error: (message) => {
         // show snackBar message on error
-        this.snackBar.open(message, 'X', {
-          duration: 2000,
-        });
+        this.snackBarMessage(message)
       }
     })
 

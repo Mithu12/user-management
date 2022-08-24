@@ -21,7 +21,6 @@ export class AppComponent {
   newLogIn = (componentRef: any) => {
     if (!(componentRef instanceof LoginComponent))
       return;
-
     // change login status when newLogin event emits
     componentRef.newLogin.subscribe(() => {
       this.isLogged = true

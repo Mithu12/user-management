@@ -34,5 +34,13 @@
 
     </div>
 
+    <div class="center">
+      <div class="pagination">
+        <a (click)="pageChange(currentPage-1)" [class.disabled]="currentPage<2">&laquo;</a>
+        <a (click)="pageChange(page)" *ngFor="let page of pageList" [class.active]="currentPage === page">{{page}}</a>
+        <a (click)="pageChange(currentPage+1)"  [class.disabled]="currentPage===totalPage">&raquo;</a>
+      </div>
+    </div>
+
   </mat-card>
 </div>
