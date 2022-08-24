@@ -1,0 +1,6 @@
+<mat-form-field appearance="outline" class="width-9">
+  <mat-label>{{label}}</mat-label>
+  <input matInput placeholder="{{ placeHolder}}" formControlName="{{ formControlName }}">
+  <mat-error *ngIf="getValidationStatus(validationName)">{{ errorMessage}}
+  </mat-error>
+</mat-form-field>

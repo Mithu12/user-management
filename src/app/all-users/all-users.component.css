@@ -24,6 +24,13 @@
   overflow-wrap: break-word;
 }
 .actions{
-  width: 20% !important;
+  width: 25% !important;
+  display: flex;
+  flex-wrap: wrap;
+  /*padding: 18px 0 !important;*/
+}
+.actions button{
+  max-width: 30% !important;
+  height: 40px;
   /*padding: 18px 0 !important;*/
 }

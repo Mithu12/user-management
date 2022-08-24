@@ -1,12 +1,11 @@
 <div class="signup-container">
   <mat-card class="login-box">
     <div class="center">
-      <mat-card-title class="mt-1 mb-1">Add New User</mat-card-title>
-      <form [formGroup]="registerForm">
+      <mat-card-title class="mt-1 mb-1">Update User Information</mat-card-title>
+      <form [formGroup]="updateForm">
 
         <!--select image-->
         <div class="form-image-box">
-
           <span>Select Image</span>
           <div>
             <img class="pointer-cursor" (click)="selectImage(imageInput)" width="200px" [src]="imageUrl" alt="">
@@ -14,6 +13,7 @@
           <mat-icon (click)="selectImage(imageInput)" class="image-edit-button"> border_color</mat-icon>
           <input hidden type="file" accept="image/*" (change)="imageChanged($event)" #imageInput>
         </div>
+
 
         <!--        User Name-->
         <mat-form-field appearance="outline" class="width-9">
@@ -82,12 +82,12 @@
 
 
         <div>
-          <button (click)="addUser()" [disabled]="!(registerForm.valid && image)" [class.disabled]="!registerForm.valid"
+          <button (click)="addUser()" [disabled]="!updateForm.valid" [class.disabled]="!updateForm.valid"
                   class="login-button" mat-stroked-button>Add User
           </button>
-                    <button (click)="addUser()"
-                            class="login-button" mat-stroked-button>Add User(no val)
-                    </button>
+          <!--          <button (click)="addUser()"-->
+          <!--                  class="login-button" mat-stroked-button>Add User(no val)-->
+          <!--          </button>-->
         </div>
 
 

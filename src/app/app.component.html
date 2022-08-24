@@ -5,8 +5,8 @@
 </a></span>
     <span class="spacer"></span>
     <div *ngIf="isLogged">
-      <a mat-button routerLink="/user/list">User List</a>
-      <a mat-button routerLink="/user/add">Add User</a>
+      <a mat-button routerLink="/user/list" routerLinkActive="active">User List</a>
+      <a mat-button routerLink="/user/add" routerLinkActive="active">Add User</a>
       <a mat-button (click)="logout()">logout</a>
     </div>
     <a *ngIf="!isLogged" mat-button routerLink="/login">Login</a>

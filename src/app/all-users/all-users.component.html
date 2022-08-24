@@ -6,6 +6,7 @@
 
       <div class="user-list-box">
         <div class="user-info-row">
+          <span> image </span>
           <span> name </span>
           <span> email </span>
           <span> phone </span>
@@ -13,13 +14,17 @@
         </div>
 
         <div *ngFor="let user of userList" class="user-info-row">
+          <span><img width="60%" src="/assets/{{ user.image}}" alt="{{ user.name}}"></span>
           <span>{{ user.name}}</span>
           <span> {{ user.email}} </span>
           <span> {{ user.phone}} </span>
           <span class="actions">
 
-            <button style="margin-right: 5px" mat-raised-button color="primary">Update</button>
-            <button mat-raised-button color="warn">Delete</button>
+            <button style="margin-right: 5px" mat-raised-button color="primary"
+                    (click)="redirectToUpdateView(user?.nid || 0)"><mat-icon>remove_red_eye</mat-icon></button>
+            <button style="margin-right: 5px" mat-raised-button color="primary"
+                    (click)="redirectToUpdateView(user?.nid || 0)"><mat-icon> border_color</mat-icon></button>
+            <button mat-raised-button color="warn"><mat-icon>delete_forever</mat-icon></button>
           </span>
         </div>
       </div>
