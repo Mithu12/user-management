@@ -65,7 +65,10 @@ export class AddUserComponent implements OnInit {
     const formGroupFields = ['name', 'email', 'phone', 'nid'],
       nestedFormFields = ['area', 'district', 'postalCode']
     formGroupFields.map(n => this.setFormDataForServer(n))
+
+    // transfer nested formGroup "address" data to formData
     nestedFormFields.map(n => this.setFormDataForServer('address.' + n, n))
+
     this.formData.set('image', this.image)
     // console.log(this.formData.get('name'))
     // console.log(this.formData.get('email'))
@@ -76,11 +79,9 @@ export class AddUserComponent implements OnInit {
     console.log(this.formData.get('image'))
   }
 
-  // return form group data by name
+  // transfer data to formData from registerForm group
   setFormDataForServer = (name: string, fieldName = '') => {
-    console.log(name, fieldName)
     this.formData.set(fieldName || name, this.getFormFieldData(name)?.value)
-    // return this.registerForm.get(name)
   }
 
   // return form group data by name
