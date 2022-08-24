@@ -2,13 +2,12 @@ import express from 'express'
 import * as path from "path";
 import userRoutes from "./routes/userRoutes.js";
 import {errorHandler, notFound} from "./middleware/errorMiddlware.js";
-// import dbPool from './utils/db.js'
-import pool from "./utils/db.js";
-import {createUserTable, deleteUserTable, getUserTableData, insertDummyUserData} from "./utils/dbQueries.js";
+import cors from 'cors';
 import dbRoutes from "./routes/dbRoutes.js";
 
 const app = express()
 
+app.use(cors())
 app.use(express.json())
 
 // routes to handle database seeding

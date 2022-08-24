@@ -4,6 +4,10 @@ import {FormBuilder, Validators} from "@angular/forms";
 import {districtList} from "../utils/districtList";
 import {user} from "../utils/testData";
 import {User} from "../utils/Interfaces";
+import {UserManageService} from "../services/user-manage.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {reduce} from "rxjs";
+import {environment} from "../../environments/environment";
 
 @Component({
   selector: 'app-user-update',
@@ -15,8 +19,10 @@ export class UserUpdateComponent implements OnInit {
   districts = districtList
   imageUrl = ''
   image: any
+  loading = true
+  server = environment.serverUrl
 
-  constructor(private route: ActivatedRoute, private fb: FormBuilder, private router: Router) {
+  constructor(private userService: UserManageService, private route: ActivatedRoute, private fb: FormBuilder, private router: Router, private snackBar: MatSnackBar) {
   }
 
 
@@ -33,31 +39,52 @@ export class UserUpdateComponent implements OnInit {
     })
   })
 
+
+  // show snackBar message on error or success
+  snackBarMessage = (message: string) => {
+    this.snackBar.open(message, 'X', {
+      duration: 2000,
+    });
+  }
+
+
   ngOnInit(): void {
     this.route.paramMap.subscribe((p: ParamMap) => this.id = Number(p.get('id')))
-// todo get data from server
-    let selectedUser: User = user.find(u => u.nid === this.id) || {
-      image: '',
-      address: {area: "", district: '', postalCode: 0}, email: '', phone: '',
-      name: '',
-      nid: 0
+    this.fetchWorkerDetails()
+  }
 
-    }
-    if (selectedUser)
-      this.imageUrl = 'assets/' + selectedUser.image
-    this.updateForm.patchValue({
-      address: selectedUser.address || {area: "", district: '', postalCode: 0},
-      email: selectedUser.email,
-      phone: selectedUser.phone,
-      name: selectedUser.name,
-      nid: selectedUser.nid || 0
+  fetchWorkerDetails = () => {
 
+    this.userService.getWorkersDetails(this.id).subscribe({
+      next: (data) => {
+        const {
+          email,
+          phone,
+          name,
+          nid,
+          area,
+          postalcode,
+          district,
+          image,
+        } = data.data
+        this.imageUrl = this.server+image
+        this.updateForm.patchValue({
+          address: {area, district, postalCode: postalcode},
+          email: email,
+          phone: phone,
+          name: name,
+          nid: nid
+        })
+        this.loading = false
+      },
+      error: (error) => this.snackBarMessage(error.message)
     })
   }
 
 
   formData = new FormData();
-  addUser = async () => {
+  updateUser = async () => {
+    this.loading = true
     // building Form data for sending to server
     const formGroupFields = ['name', 'email', 'phone', 'nid'],
       nestedFormFields = ['area', 'district', 'postalCode']
@@ -66,14 +93,21 @@ export class UserUpdateComponent implements OnInit {
     // transfer nested formGroup "address" data to formData
     nestedFormFields.map(n => this.setFormDataForServer('address.' + n, n))
     this.image && this.formData.set('image', this.image)
+    this.formData.set('id', this.id.toString())
 
-    console.log(this.formData.get('name'))
-    console.log(this.formData.get('email'))
-    console.log(this.formData.get('phone'))
-    console.log(this.formData.get('area'))
-    console.log(this.formData.get('district'))
-    console.log(this.formData.get('postalCode'))
-    console.log(this.formData.get('image'))
+    // call to service for user information update
+    this.userService.updateWorkersDetails(this.formData).subscribe({
+      next: (data) => {
+        this.fetchWorkerDetails()
+      },
+      error: (message) => {
+        // show snackBar message on error
+        this.snackBar.open(message, 'X', {
+          duration: 2000,
+        });
+      }
+    })
+
   }
 
   // transfer data to formData from registerForm group

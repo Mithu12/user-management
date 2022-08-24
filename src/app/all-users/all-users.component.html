@@ -1,9 +1,12 @@
+<div class="loader-box" *ngIf="loading">
+  <div class="loader"></div>
+</div>
+
 <div class="user-list-container">
 
   <mat-card style="width: 80%">
     <div class="center">
       <mat-card-title class="mt-1 mb-1">All User</mat-card-title>
-
       <div class="user-list-box">
         <div class="user-info-row">
           <span> image </span>
@@ -14,21 +17,22 @@
         </div>
 
         <div *ngFor="let user of userList" class="user-info-row">
-          <span><img width="60%" src="/assets/{{ user.image}}" alt="{{ user.name}}"></span>
+          <span><img width="60%" src="{{serverUrl}}{{ user.image}}" alt="{{ user.name}}"></span>
           <span>{{ user.name}}</span>
           <span> {{ user.email}} </span>
           <span> {{ user.phone}} </span>
           <span class="actions">
 
             <button style="margin-right: 5px" mat-raised-button color="primary"
-                    (click)="redirectToUpdateView(user?.nid || 0)"><mat-icon>remove_red_eye</mat-icon></button>
+                    (click)="redirectToDetailsView(user?.id || 0)"><mat-icon>remove_red_eye</mat-icon></button>
             <button style="margin-right: 5px" mat-raised-button color="primary"
-                    (click)="redirectToUpdateView(user?.nid || 0)"><mat-icon> border_color</mat-icon></button>
-            <button mat-raised-button color="warn"><mat-icon>delete_forever</mat-icon></button>
+                    (click)="redirectToUpdateView(user?.id || 0)"><mat-icon> border_color</mat-icon></button>
+            <button mat-raised-button color="warn" (click)="removeUser(user.id)"><mat-icon>delete_forever</mat-icon></button>
           </span>
         </div>
       </div>
 
     </div>
+
   </mat-card>
 </div>

@@ -6,6 +6,7 @@ import {NotFoundComponent} from "./not-found/not-found.component";
 import {AllUsersComponent} from "./all-users/all-users.component";
 import {UserUpdateComponent} from './user-update/user-update.component';
 import {TextInputComponentComponent} from './text-input-component/text-input-component.component';
+import {UserDetailsComponent} from './user-details/user-details.component';
 
 const routes: Routes = [
   {path: "", redirectTo: '/login', pathMatch: 'full'},
@@ -13,6 +14,7 @@ const routes: Routes = [
   {path: 'user/add', component: AddUserComponent},
   {path: 'user/list', component: AllUsersComponent},
   {path: 'user/update/:id', component: UserUpdateComponent},
+  {path: 'user/details/:id', component: UserDetailsComponent},
   {path: '**', component: NotFoundComponent},
 ];
 
@@ -25,6 +27,6 @@ export class AppRoutingModule {
 }
 
 export const routingComponents = [
-  LoginComponent, AddUserComponent, NotFoundComponent, AllUsersComponent, UserUpdateComponent,
+  LoginComponent, AddUserComponent, NotFoundComponent, AllUsersComponent, UserUpdateComponent, UserDetailsComponent,
   TextInputComponentComponent,
 ]

@@ -1,0 +1,7 @@
+.details-row{
+  margin: 10px 0;
+  padding: 10px 20px;
+  /*justify-content: space-between;*/
+  line-height: 30px;
+  background: #F4FAFF;
+}

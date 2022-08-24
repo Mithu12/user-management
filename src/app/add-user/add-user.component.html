@@ -1,7 +1,12 @@
+<div class="loader-box" *ngIf="loading">
+  <div class="loader"></div>
+</div>
+
 <div class="signup-container">
   <mat-card class="login-box">
     <div class="center">
       <mat-card-title class="mt-1 mb-1">Add New User</mat-card-title>
+      <p *ngIf="message">{{message}}</p>
       <form [formGroup]="registerForm">
 
         <!--select image-->
@@ -85,9 +90,9 @@
           <button (click)="addUser()" [disabled]="!(registerForm.valid && image)" [class.disabled]="!registerForm.valid"
                   class="login-button" mat-stroked-button>Add User
           </button>
-                    <button (click)="addUser()"
-                            class="login-button" mat-stroked-button>Add User(no val)
-                    </button>
+          <!--                    <button (click)="addUser()"-->
+          <!--                            class="login-button" mat-stroked-button>Add User(no val)-->
+          <!--                    </button>-->
         </div>
 
 

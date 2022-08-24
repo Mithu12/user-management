@@ -9,18 +9,20 @@ import path from "path";
 // @access  Public
 
 export const getUsers = asyncHandler(async (req, res) => {
-
   const {lastId, limit = 20} = req.query
 
   const whereClause = lastId ? `WHERE users.id<${Number(lastId)}` : ''
 
+  const countQuery = `SELECT count(*) FROM users`
   const query = `SELECT * FROM users ${whereClause} ORDER BY users.id DESC LIMIT ${Number(limit)}`
 
   const users = await pool.query(query)
+  const count = await pool.query(countQuery)
   res.json({
     message: '',
     success: true,
-    data: users.rows
+    data: users.rows,
+    totalPages: Math.ceil(count / limit)
   })
 })
 
@@ -57,17 +59,19 @@ export const createUser = asyncHandler(async (req, res) => {
 
   const image = '/' + req.file.filename
 
+  console.log(req.body)
+
   const {
     name,
     email,
     phone,
-    nid,
+    nid = 0,
     area,
     district,
     postalCode
   } = req.body
 
-  const userInfo = `'${image}','${name}','${email}','${phone}',${nid},'${area}','${district}', ${postalCode}`
+  const userInfo = `'${image}','${name}','${email}','${phone}',${nid ? nid : 0},'${area}','${district}', ${postalCode}`
   const query = `INSERT INTO users(
     image,
     name,
@@ -78,6 +82,7 @@ export const createUser = asyncHandler(async (req, res) => {
     district,
     postalCode
     ) VALUES(${userInfo})`
+  console.log(query)
   await pool.query(query)
   res.json({
     message: '',

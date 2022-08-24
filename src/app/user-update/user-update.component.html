@@ -1,9 +1,12 @@
+<div class="loader-box" *ngIf="loading">
+  <div class="loader"></div>
+</div>
+
 <div class="signup-container">
   <mat-card class="login-box">
     <div class="center">
       <mat-card-title class="mt-1 mb-1">Update User Information</mat-card-title>
       <form [formGroup]="updateForm">
-
         <!--select image-->
         <div class="form-image-box">
           <span>Select Image</span>
@@ -82,7 +85,7 @@
 
 
         <div>
-          <button (click)="addUser()" [disabled]="!updateForm.valid" [class.disabled]="!updateForm.valid"
+          <button (click)="updateUser()" [disabled]="!updateForm.valid" [class.disabled]="!updateForm.valid"
                   class="login-button" mat-stroked-button>Add User
           </button>
           <!--          <button (click)="addUser()"-->

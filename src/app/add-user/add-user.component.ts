@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {districtList} from "../utils/districtList";
+import {UserManageService} from "../services/user-manage.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-add-user',
@@ -14,8 +16,10 @@ export class AddUserComponent implements OnInit {
   imageUrl = '/assets/test.webp'
   image: any
   formData = new FormData()
+  message = ''
+  loading = false
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(private fb: FormBuilder, private router: Router, private userService: UserManageService, public snackBar: MatSnackBar) {
     // redirect to login page if not logged in
     if (!document.cookie.includes('loggedIn'))
       router.navigate(['/'])
@@ -61,7 +65,7 @@ export class AddUserComponent implements OnInit {
 
 
   addUser = async () => {
-// todo send data to server
+    this.loading = true
     const formGroupFields = ['name', 'email', 'phone', 'nid'],
       nestedFormFields = ['area', 'district', 'postalCode']
     formGroupFields.map(n => this.setFormDataForServer(n))
@@ -70,13 +74,20 @@ export class AddUserComponent implements OnInit {
     nestedFormFields.map(n => this.setFormDataForServer('address.' + n, n))
 
     this.image && this.formData.set('image', this.image)
-    // console.log(this.formData.get('name'))
-    // console.log(this.formData.get('email'))
-    // console.log(this.formData.get('phone'))
-    // console.log(this.formData.get('area'))
-    // console.log(this.formData.get('district'))
-    // console.log(this.formData.get('postalCode'))
-    // console.log(this.formData.get('image'))
+    this.userService.addWorkers(this.formData).subscribe({
+      next: (data) => {
+        this.loading = false
+        this.router.navigate(['user/list'])
+      },
+      error: (message) => {
+        // show snackBar message on error
+
+        this.loading = false
+        this.snackBar.open(message, 'X', {
+          duration: 2000,
+        });
+      }
+    })
   }
 
   // transfer data to formData from registerForm group
