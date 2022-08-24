@@ -56,10 +56,29 @@ export class UserUpdateComponent implements OnInit {
   }
 
 
+  formData = new FormData();
   addUser = async () => {
     // building Form data for sending to server
-    const formData = new FormData();
-    formData.append('image', this.image);
+    const formGroupFields = ['name', 'email', 'phone', 'nid'],
+      nestedFormFields = ['area', 'district', 'postalCode']
+    formGroupFields.map(n => this.setFormDataForServer(n))
+
+    // transfer nested formGroup "address" data to formData
+    nestedFormFields.map(n => this.setFormDataForServer('address.' + n, n))
+    this.image && this.formData.set('image', this.image)
+
+    console.log(this.formData.get('name'))
+    console.log(this.formData.get('email'))
+    console.log(this.formData.get('phone'))
+    console.log(this.formData.get('area'))
+    console.log(this.formData.get('district'))
+    console.log(this.formData.get('postalCode'))
+    console.log(this.formData.get('image'))
+  }
+
+  // transfer data to formData from registerForm group
+  setFormDataForServer = (name: string, fieldName = '') => {
+    this.formData.set(fieldName || name, this.getFormFieldData(name)?.value)
   }
 
 // update the image when image is selected or changed

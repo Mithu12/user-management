@@ -69,14 +69,14 @@ export class AddUserComponent implements OnInit {
     // transfer nested formGroup "address" data to formData
     nestedFormFields.map(n => this.setFormDataForServer('address.' + n, n))
 
-    this.formData.set('image', this.image)
+    this.image && this.formData.set('image', this.image)
     // console.log(this.formData.get('name'))
     // console.log(this.formData.get('email'))
     // console.log(this.formData.get('phone'))
     // console.log(this.formData.get('area'))
     // console.log(this.formData.get('district'))
     // console.log(this.formData.get('postalCode'))
-    console.log(this.formData.get('image'))
+    // console.log(this.formData.get('image'))
   }
 
   // transfer data to formData from registerForm group

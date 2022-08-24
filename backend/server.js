@@ -14,7 +14,7 @@ app.use(express.json())
 // routes to handle database seeding
 app.use(dbRoutes)
 // routes to handle user related operations
-// app.use('/api/users', userRoutes)
+app.use('/api/users', userRoutes)
 
 const __dirname = path.resolve()
 app.use(express.static(path.join(__dirname, 'uploads')))
